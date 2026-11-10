@@ -6,16 +6,44 @@
 <title>Page not found | Indrix</title>
 <meta name="robots" content="noindex">
 <meta name="theme-color" content="#4f46e5">
-<link rel="icon" href="/favicon.svg" type="image/svg+xml">
-<script>try{var t=localStorage.getItem("indrix.theme");if(t==="dark"||t==="light")document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
-<link rel="stylesheet" href="/assets/site.css">
+<!-- This page is self-contained on purpose: a 404 can be shown at any address,
+     so it must not depend on the location of other files. -->
+<style>
+  :root { --ink: #0f1222; --muted: #5d6479; --bg: #ffffff; color-scheme: light; }
+  @media (prefers-color-scheme: dark) { :root { --ink: #eef0fa; --muted: #9aa1b8; --bg: #0b0c16; color-scheme: dark; } }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    min-height: 100vh; display: grid; place-items: center; text-align: center; padding: 40px 20px;
+    font-family: "Plus Jakarta Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+    color: var(--ink); background: var(--bg); line-height: 1.6;
+  }
+  .num {
+    font-size: clamp(5rem, 18vw, 9rem); font-weight: 800; line-height: 1; letter-spacing: -.04em;
+    background: linear-gradient(135deg, #4f46e5, #7c3aed 55%, #06b6d4);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+  h1 { font-size: clamp(1.6rem, 4.4vw, 2.4rem); letter-spacing: -.02em; margin: 14px 0 8px; }
+  p { color: var(--muted); }
+  a {
+    display: inline-block; margin-top: 26px; padding: 14px 24px; border-radius: 999px;
+    font-weight: 700; text-decoration: none; color: #fff;
+    background: linear-gradient(135deg, #4f46e5, #7c3aed);
+    box-shadow: 0 12px 30px -10px rgba(79, 70, 229, .6);
+  }
+</style>
 </head>
 <body>
-<main class="page center"><div class="wrap">
-  <div class="big404 grad-text">404</div>
+<main>
+  <div class="num">404</div>
   <h1>This page does not exist</h1>
   <p>The link may be old, or the address may have a typing mistake.</p>
-  <p style="margin-top:24px"><a class="btn btn-pri" href="/">Go to the Indrix home page</a></p>
-</div></main>
+  <a id="home" href="/">Go to the Indrix home page</a>
+</main>
+<script>
+  // On a github.io address the site lives in a sub-folder (for example /Indrix/), so send people there.
+  if (location.hostname.endsWith("github.io")) {
+    document.getElementById("home").href = "/" + location.pathname.split("/")[1] + "/";
+  }
+</script>
 </body>
 </html>
