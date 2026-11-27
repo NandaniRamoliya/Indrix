@@ -1,6 +1,7 @@
 /* Indrix website styles.
-   Brand tokens match PinPage (indigo, violet, cyan + Plus Jakarta Sans),
-   so the company site and its products read as one family. */
+   Brand colours come from the INDRIX brand guide:
+   INDRIX Purple #8A00FF, Night Black #14121C and white.
+   Dark is the main look; light is available from the theme button. */
 
 @font-face {
   font-family: "Plus Jakarta Sans";
@@ -11,55 +12,46 @@
 }
 
 /* ---------- Tokens ---------- */
+/* Brand colours (same in both themes) */
 :root {
-  --pri: #4f46e5;
-  --vio: #7c3aed;
-  --cy: #06b6d4;
+  --pri: #8a00ff;   /* INDRIX Purple */
+  --vio: #5a00c8;   /* deep purple, for gradients */
+  --lilac: #b98aff; /* light purple, for highlights on dark */
   --wa: #25d366;
-  --pri-text: #4f46e5;
-  --ink: #0f1222;
-  --muted: #5d6479;
-  --bg: #ffffff;
-  --soft: #f4f5fb;
-  --card: #ffffff;
-  --line: #e6e8f0;
-  --head: rgba(255, 255, 255, .85);
-  --grid: rgba(15, 18, 34, .05);
-  --shadow: rgba(15, 18, 34, .35);
-  --tint: rgba(79, 70, 229, .08);
   --r: 20px;
-  --grad: linear-gradient(135deg, var(--pri), var(--vio) 55%, var(--cy));
-  color-scheme: light;
+  --grad: linear-gradient(135deg, var(--pri), var(--vio));
 }
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    --pri-text: #a5b4fc;
-    --ink: #eef0fa;
-    --muted: #9aa1b8;
-    --bg: #0b0c16;
-    --soft: #10121e;
-    --card: #171a2b;
-    --line: #272b41;
-    --head: rgba(11, 12, 22, .82);
-    --grid: rgba(255, 255, 255, .045);
-    --shadow: rgba(0, 0, 0, .7);
-    --tint: rgba(165, 180, 252, .1);
-    color-scheme: dark;
-  }
-}
-:root[data-theme="dark"] {
-  --pri-text: #a5b4fc;
-  --ink: #eef0fa;
-  --muted: #9aa1b8;
-  --bg: #0b0c16;
-  --soft: #10121e;
-  --card: #171a2b;
-  --line: #272b41;
-  --head: rgba(11, 12, 22, .82);
+/* Dark (default) */
+:root {
+  --pri-text: #b98aff;
+  --hi: #d9bfff;
+  --ink: #f3f1f8;
+  --muted: #a3a0b3;
+  --bg: #14121c;    /* Night Black */
+  --soft: #1a1724;
+  --card: #211d2d;
+  --line: #322d42;
+  --head: rgba(20, 18, 28, .82);
   --grid: rgba(255, 255, 255, .045);
   --shadow: rgba(0, 0, 0, .7);
-  --tint: rgba(165, 180, 252, .1);
+  --tint: rgba(138, 0, 255, .16);
   color-scheme: dark;
+}
+/* Light (picked with the theme button) */
+:root[data-theme="light"] {
+  --pri-text: #8a00ff;
+  --hi: #5a00c8;
+  --ink: #14121c;
+  --muted: #5f5a6e;
+  --bg: #ffffff;
+  --soft: #f6f4fa;
+  --card: #ffffff;
+  --line: #e8e4f0;
+  --head: rgba(255, 255, 255, .85);
+  --grid: rgba(20, 18, 28, .05);
+  --shadow: rgba(20, 18, 28, .3);
+  --tint: rgba(138, 0, 255, .08);
+  color-scheme: light;
 }
 
 /* ---------- Base ---------- */
@@ -78,12 +70,12 @@ a { color: inherit; }
 img, svg { max-width: 100%; }
 .wrap { width: min(1140px, 100% - 40px); margin-inline: auto; }
 .grad-text {
-  background: linear-gradient(135deg, var(--pri-text), var(--cy));
+  background: linear-gradient(135deg, var(--pri-text), var(--hi));
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
 }
-:focus-visible { outline: 3px solid var(--cy); outline-offset: 3px; border-radius: 6px; }
+:focus-visible { outline: 3px solid var(--pri-text); outline-offset: 3px; border-radius: 6px; }
 .skip {
   position: absolute; left: -999px; top: 8px; z-index: 100;
   background: var(--card); color: var(--ink); padding: 10px 16px; border-radius: 10px; font-weight: 700;
@@ -102,7 +94,7 @@ img, svg { max-width: 100%; }
 .btn svg { width: 18px; height: 18px; flex: none; }
 .btn-pri {
   background: linear-gradient(135deg, var(--pri), var(--vio));
-  color: #fff; box-shadow: 0 12px 30px -10px rgba(79, 70, 229, .6);
+  color: #fff; box-shadow: 0 12px 30px -10px rgba(138, 0, 255, .55);
 }
 .btn-wa { background: var(--wa); color: #fff; box-shadow: 0 12px 30px -12px rgba(37, 211, 102, .7); }
 .btn-ghost { border-color: var(--line); background: var(--card); color: var(--ink); }
@@ -121,12 +113,9 @@ header.site {
   border-bottom: 1px solid var(--line);
 }
 .nav { display: flex; align-items: center; justify-content: space-between; height: 68px; gap: 16px; }
-.logo {
-  display: flex; align-items: center; gap: 10px;
-  font-weight: 800; font-size: 1.4rem; letter-spacing: -.02em;
-  text-decoration: none; white-space: nowrap;
-}
-.logo svg { width: 34px; height: 34px; flex: none; }
+.logo { display: flex; align-items: center; color: var(--ink); text-decoration: none; }
+/* The wordmark SVG draws its letters in the text colour, so it switches with the theme. */
+.logo svg { display: block; height: 22px; width: auto; aspect-ratio: 917.5 / 145.4; flex: none; }
 .links { display: flex; gap: 26px; align-items: center; }
 .links a:not(.btn) { text-decoration: none; font-weight: 600; color: var(--muted); }
 .links a:not(.btn):hover { color: var(--ink); }
@@ -138,13 +127,9 @@ header.site {
   cursor: pointer; display: grid; place-items: center;
 }
 .icon-btn svg { width: 18px; height: 18px; }
-.theme .moon { display: none; }
-:root[data-theme="dark"] .theme .sun { display: none; }
-:root[data-theme="dark"] .theme .moon { display: block; }
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) .theme .sun { display: none; }
-  :root:not([data-theme="light"]) .theme .moon { display: block; }
-}
+.theme .sun { display: none; }
+:root[data-theme="light"] .theme .sun { display: block; }
+:root[data-theme="light"] .theme .moon { display: none; }
 .menu { display: none; }
 @media (max-width: 860px) {
   .menu { display: grid; }
@@ -165,8 +150,8 @@ header.site {
 .hero {
   position: relative; padding: 84px 0 72px;
   background:
-    radial-gradient(900px 420px at 88% -10%, rgba(6, 182, 212, .17), transparent),
-    radial-gradient(800px 440px at 0% 0%, rgba(79, 70, 229, .15), transparent);
+    radial-gradient(900px 420px at 88% -10%, rgba(138, 0, 255, .2), transparent),
+    radial-gradient(800px 440px at 0% 0%, rgba(90, 0, 200, .14), transparent);
 }
 .hero-grid { display: grid; grid-template-columns: 1.05fr 1fr; gap: 56px; align-items: center; }
 .pill {
@@ -278,21 +263,17 @@ h3 { letter-spacing: -.01em; }
 /* mini WhatsApp chat preview of a Replix bot */
 .chat-mock { border-radius: 18px; overflow: hidden; border: 1px solid var(--line); box-shadow: 0 30px 60px -30px var(--shadow); background: #efeae2; font-size: .84rem; }
 .chat-head { display: flex; gap: 10px; align-items: center; padding: 12px 14px; background: #075e54; color: #fff; font-weight: 700; }
-.chat-head i { width: 30px; height: 30px; border-radius: 50%; display: grid; place-items: center; font-style: normal; background: linear-gradient(135deg, #16a34a, var(--cy)); }
+.chat-head i { width: 30px; height: 30px; border-radius: 50%; display: grid; place-items: center; font-style: normal; background: linear-gradient(135deg, #16a34a, var(--wa)); }
 .chat-head small { display: block; font-weight: 500; font-size: .7rem; opacity: .8; }
 .chat-body { display: flex; flex-direction: column; gap: 7px; padding: 14px 12px 16px; }
 .chat-body p { max-width: 86%; padding: 7px 10px; border-radius: 10px; background: #fff; color: #111b21; box-shadow: 0 1px 1px rgba(0,0,0,.08); }
 .chat-body p.me { align-self: flex-end; background: #d9fdd3; }
 .chat-body b { display: block; margin-top: 6px; padding-top: 5px; border-top: 1px solid #e6e6e6; text-align: center; color: #0a7cff; font-weight: 600; }
 .chat-body b + b { margin-top: 0; }
-:root[data-theme="dark"] .chat-mock { background: #0b141a; }
-:root[data-theme="dark"] .chat-body p { background: #202c33; color: #e9edef; } :root[data-theme="dark"] .chat-body p.me { background: #005c4b; }
-:root[data-theme="dark"] .chat-body b { border-color: #33434c; color: #53bdeb; }
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) .chat-mock { background: #0b141a; }
-  :root:not([data-theme="light"]) .chat-body p { background: #202c33; color: #e9edef; } :root:not([data-theme="light"]) .chat-body p.me { background: #005c4b; }
-  :root:not([data-theme="light"]) .chat-body b { border-color: #33434c; color: #53bdeb; }
-}
+:root:not([data-theme="light"]) .chat-mock { background: #0b141a; }
+:root:not([data-theme="light"]) .chat-body p { background: #202c33; color: #e9edef; }
+:root:not([data-theme="light"]) .chat-body p.me { background: #005c4b; }
+:root:not([data-theme="light"]) .chat-body b { border-color: #33434c; color: #53bdeb; }
 @media (max-width: 1020px) { .products { grid-template-columns: 1fr; } }
 @media (max-width: 720px) { .product { grid-template-columns: 1fr; padding: 26px 22px; } .next { padding: 26px 22px; } }
 
@@ -309,7 +290,7 @@ h3 { letter-spacing: -.01em; }
 .alt .chips li { background: var(--bg); }
 .svc.ask { background: var(--grad); border: 0; color: #fff; display: flex; flex-direction: column; align-items: flex-start; }
 .svc.ask p { color: rgba(255, 255, 255, .9); margin-bottom: 20px; }
-.svc.ask .btn { margin-top: auto; background: #fff; color: #0f1222; padding: 12px 20px; }
+.svc.ask .btn { margin-top: auto; background: #fff; color: #14121c; padding: 12px 20px; }
 @media (max-width: 960px) { .services { grid-template-columns: repeat(2, 1fr); } }
 @media (max-width: 620px) { .services { grid-template-columns: 1fr; } }
 
@@ -354,7 +335,7 @@ h3 { letter-spacing: -.01em; }
 .founder-av {
   width: 76px; height: 76px; border-radius: 50%; margin: -38px 0 0 28px;
   display: grid; place-items: center; font-size: 1.9rem; font-weight: 800; color: #fff;
-  background: linear-gradient(135deg, var(--vio), var(--cy)); border: 4px solid var(--card);
+  background: linear-gradient(135deg, var(--pri), var(--vio)); border: 4px solid var(--card);
 }
 .founder-body { padding: 14px 28px 28px; }
 .founder-body h3 { font-size: 1.4rem; margin-top: 4px; }
@@ -396,8 +377,7 @@ input:focus, select:focus, textarea:focus { outline: none; border-color: var(--p
 /* ---------- Footer ---------- */
 footer.site { padding: 44px 0; color: var(--muted); font-size: .92rem; border-top: 1px solid var(--line); }
 .foot { display: flex; justify-content: space-between; align-items: center; gap: 18px 30px; flex-wrap: wrap; }
-.foot .logo { font-size: 1.15rem; color: var(--ink); }
-.foot .logo svg { width: 28px; height: 28px; }
+.foot .logo svg { height: 18px; }
 .foot nav { display: flex; gap: 8px 22px; flex-wrap: wrap; }
 .foot nav a { text-decoration: none; font-weight: 600; }
 .foot nav a:hover { color: var(--ink); }

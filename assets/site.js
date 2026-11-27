@@ -1,12 +1,11 @@
 (function () {
   var root = document.documentElement;
 
-  // Light / dark mode: follows the device until the visitor picks one.
+  // Light / dark mode: dark is the brand default until the visitor picks light.
   var themeBtn = document.getElementById("themeBtn");
   if (themeBtn) {
     themeBtn.addEventListener("click", function () {
-      var cur = root.getAttribute("data-theme") ||
-        (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+      var cur = root.getAttribute("data-theme") || "dark";
       var next = cur === "dark" ? "light" : "dark";
       root.setAttribute("data-theme", next);
       try { localStorage.setItem("indrix.theme", next); } catch (e) {}
