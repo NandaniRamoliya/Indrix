@@ -33,6 +33,8 @@ Connect this repository to Cloudflare Pages or Netlify with these settings:
 
 ## Common edits
 
+- **After changing CSS, JavaScript, the logo or the icons:** raise the `?v=2` number on their links in `index.html` and `privacy.html` (for example to `?v=3`), so visitors' browsers load the new files instead of old saved copies.
+
 - **Contact details:** in `index.html`, search for `data-whatsapp` and `data-email` on the contact form, and for the links in the Contact section.
 - **Add a product:** copy the `<article class="product">` block in the Products section.
 - **Brand colours:** they are at the top of `assets/site.css`: `--pri` is INDRIX Purple `#8A00FF`, `--bg` (dark) is Night Black `#14121C`. Dark is the default look; visitors can switch to light with the theme button.
